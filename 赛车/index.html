@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>极限竞速 · 赛车</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>🏁 极限竞速</h1>
+      <p class="subtitle">俯视赛道 · 漂移物理 · AI 对手 · 最佳圈速</p>
+    </header>
+
+    <main>
+      <div id="board-wrap">
+        <canvas id="board"></canvas>
+        <div id="countdown" class="hidden">3</div>
+        <div id="overlay" class="hidden">
+          <div class="overlay-card">
+            <div id="overlay-title">比赛结束</div>
+            <div id="overlay-body"></div>
+            <button id="overlay-btn">再来一局</button>
+          </div>
+        </div>
+        <!-- 触屏虚拟按键（E7） -->
+        <div id="touch-ctrl">
+          <div class="tc-left">
+            <button class="tc-btn" id="btn-tl">◀</button>
+            <button class="tc-btn" id="btn-tr">▶</button>
+          </div>
+          <div class="tc-right">
+            <button class="tc-btn tc-brk" id="brk">B</button>
+            <button class="tc-btn tc-gas" id="btn-gas">A</button>
+          </div>
+        </div>
+      </div>
+
+      <aside id="panel">
+        <div class="card">
+          <div class="hud">
+            <div class="hud-item big">
+              <span class="hud-label">速度 km/h</span>
+              <span class="hud-value" id="speed">0</span>
+            </div>
+            <div class="hud-item">
+              <span class="hud-label">圈数</span>
+              <span class="hud-value" id="lap">1 / 3</span>
+            </div>
+            <div class="hud-item">
+              <span class="hud-label">名次</span>
+              <span class="hud-value" id="pos">P1</span>
+            </div>
+          </div>
+
+          <div class="hud hud-second">
+            <div class="hud-item">
+              <span class="hud-label">本圈</span>
+              <span class="hud-value" id="cur-lap">—</span>
+            </div>
+            <div class="hud-item">
+              <span class="hud-label">上一圈</span>
+              <span class="hud-value" id="last-lap">—</span>
+            </div>
+            <div class="hud-item">
+              <span class="hud-label">最佳圈</span>
+              <span class="hud-value" id="best-lap">—</span>
+            </div>
+          </div>
+
+          <div class="nitro-wrap">
+            <span class="nitro-label">N₂O 氮气</span>
+            <div class="nitro-track"><div class="nitro-bar" id="nitro-bar"></div></div>
+          </div>
+
+          <div id="status" class="status">准备发车</div>
+
+          <div class="rank-title">实时排名</div>
+          <div id="rank-list"></div>
+
+          <div class="controls">
+            <label>难度
+              <select id="difficulty">
+                <option value="rookie">新手（3 名 AI）</option>
+                <option value="normal" selected>标准（4 名 AI）</option>
+                <option value="master">大师（5 名 AI）</option>
+              </select>
+            </label>
+            <label>赛制
+              <select id="laps">
+                <option value="1">1 圈冲刺</option>
+                <option value="3" selected>3 圈</option>
+                <option value="5">5 圈耐力</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="btns">
+            <button id="btn-new">新比赛</button>
+            <button id="btn-pause">暂停</button>
+            <button id="btn-sound">音效：开</button>
+          </div>
+
+          <div class="tips">
+            ↑/W 油门 · ↓/S 刹车/倒车 · ←→/AD 转向<br>
+            Shift 氮气 · 空格暂停 · R 重开<br>
+            出赛道会大幅减速，弯道提前刹车漂移过弯更快<br>
+            演示模式：地址栏加 <b>?demo</b> 可观看 AI 代驾
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="js/track.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

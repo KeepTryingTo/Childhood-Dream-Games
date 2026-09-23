@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="游戏大厅 —— 俄罗斯方块、贪吃蛇、五子棋、中国象棋、溪畔村庄，五款网页小游戏合集，点击即玩。" />
+<meta name="description" content="游戏大厅 —— 俄罗斯方块、贪吃蛇、五子棋、中国象棋、溪畔村庄、机战六款网页小游戏，外加云音音乐播放器，点击即玩。" />
 <title>🎮 游戏大厅 · My Games</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>" />
 <style>
@@ -87,6 +87,8 @@ body::before {
 .card:nth-child(3) { animation-delay: .21s; }
 .card:nth-child(4) { animation-delay: .29s; }
 .card:nth-child(5) { animation-delay: .37s; }
+.card:nth-child(6) { animation-delay: .45s; }
+.card:nth-child(7) { animation-delay: .53s; }
 .card:hover { --ty: -7px; border-color: var(--ac); box-shadow: 0 26px 52px -16px var(--glow); }
 .card:focus-visible { outline: 2px solid var(--ac); outline-offset: 3px; }
 .art { position: relative; height: 170px; overflow: hidden; user-select: none; -webkit-user-select: none; }
@@ -284,6 +286,114 @@ body::before {
 .v-tree::after { content: ''; position: absolute; left: 50%; bottom: -7px; transform: translateX(-50%); width: 5px; height: 9px; background: #8b5a2b; border-radius: 2px; }
 .v-tree.t1 { right: 46px; bottom: 36px; }
 .v-tree.t2 { right: 92px; bottom: 38px; width: 24px; height: 24px; opacity: .95; }
+.art-mech { background: linear-gradient(165deg, #131a3a, #060a18 72%); }
+.art-mech::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 18% 26%, rgba(255,255,255,.5), transparent 60%),
+    radial-gradient(1px 1px at 38% 64%, rgba(255,255,255,.35), transparent 60%),
+    radial-gradient(1.5px 1.5px at 58% 16%, rgba(255,255,255,.45), transparent 60%),
+    radial-gradient(1px 1px at 78% 46%, rgba(255,255,255,.3), transparent 60%),
+    radial-gradient(2px 2px at 66% 86%, rgba(255,255,255,.4), transparent 60%),
+    radial-gradient(1px 1px at 8% 76%, rgba(255,255,255,.28), transparent 60%);
+}
+.art-mech::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(130% 95% at 50% 38%, transparent 58%, rgba(2, 4, 14, .5));
+}
+.m-foe {
+  position: absolute; width: 26px; height: 21px; z-index: 2;
+  background: linear-gradient(180deg, #fb7185, #be123c);
+  clip-path: polygon(50% 100%, 100% 0, 82% 46%, 50% 30%, 18% 46%, 0 0);
+  filter: drop-shadow(0 0 6px rgba(244, 63, 94, .55));
+  animation: foehover 3.6s ease-in-out infinite;
+}
+@keyframes foehover { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(9px); } }
+.m-ship { position: absolute; left: 158px; bottom: 16px; width: 36px; height: 44px; z-index: 3; animation: shipdrift 3.4s ease-in-out infinite; }
+.m-ship::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, #e0f2fe, #60a5fa 55%, #2563eb);
+  clip-path: polygon(50% 0, 80% 34%, 100% 100%, 50% 82%, 0 100%, 20% 34%);
+  filter: drop-shadow(0 0 9px rgba(96, 165, 250, .75));
+}
+.m-ship::after {
+  content: ''; position: absolute; left: 50%; bottom: -13px; width: 8px; height: 16px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fde68a, #f59e0b 55%, rgba(245, 158, 11, 0));
+  animation: mflame .42s ease-in-out infinite alternate;
+}
+@keyframes mflame { from { transform: translate(-50%, 0) scaleY(.72); opacity: .8; } to { transform: translate(-50%, 0) scaleY(1.18); opacity: 1; } }
+@keyframes shipdrift { 0%, 100% { transform: translateX(-9px); } 50% { transform: translateX(9px); } }
+.m-shot {
+  position: absolute; width: 5px; height: 13px; border-radius: 999px; z-index: 3;
+  background: linear-gradient(180deg, #cffafe, #22d3ee);
+  box-shadow: 0 0 8px rgba(34, 211, 238, .9);
+  animation: shotup 1.5s linear infinite;
+  animation-delay: var(--d, 0s);
+}
+@keyframes shotup { from { transform: translateY(0); opacity: 1; } 82% { opacity: 1; } to { transform: translateY(-128px); opacity: 0; } }
+.m-eb {
+  position: absolute; width: 7px; height: 7px; border-radius: 50%; z-index: 3;
+  background: radial-gradient(circle at 35% 30%, #fecaca, #ef4444 65%);
+  box-shadow: 0 0 8px rgba(239, 68, 68, .85);
+  animation: efall 2.9s ease-in infinite;
+  animation-delay: var(--d, 0s);
+}
+@keyframes efall { from { transform: translateY(-14px); opacity: 0; } 14% { opacity: 1; } to { transform: translateY(148px); opacity: .85; } }
+.art-player { background: linear-gradient(160deg, #2c0a3e, #150722 72%); }
+.p-disc {
+  position: absolute; left: 50%; top: 45%; width: 104px; height: 104px; border-radius: 50%;
+  background: repeating-radial-gradient(circle at 50% 50%, #1b1b21 0 2.5px, #2d2d36 2.5px 5px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .55), inset 0 0 0 2px rgba(255, 255, 255, .05);
+  animation: discspin 7s linear infinite;
+}
+.p-disc::before {
+  content: ''; position: absolute; inset: 32px; border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 32%, rgba(255, 255, 255, .4), transparent 55%),
+    conic-gradient(#f472b6, #db2777, #9d174d, #db2777, #f472b6);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22);
+}
+.p-disc::after {
+  content: ''; position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: #f4f4f5; box-shadow: 0 0 0 2px rgba(0, 0, 0, .45);
+}
+@keyframes discspin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+.p-tone {
+  position: absolute; left: calc(50% + 54px); top: 12px; width: 4px; height: 74px; border-radius: 4px;
+  background: linear-gradient(180deg, #e4e4e7, #71717a);
+  transform: rotate(30deg); transform-origin: 50% 9%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .4);
+}
+.p-tone::before {
+  content: ''; position: absolute; top: -7px; left: 50%; transform: translateX(-50%);
+  width: 16px; height: 16px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fafafa, #a1a1aa 70%);
+}
+.p-tone::after {
+  content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
+  width: 12px; height: 18px; border-radius: 4px;
+  background: linear-gradient(180deg, #f472b6, #be185d);
+}
+.p-note {
+  position: absolute; font-size: 16px; font-style: normal; color: rgba(244, 114, 182, .9);
+  text-shadow: 0 0 10px rgba(244, 114, 182, .55);
+  animation: notefloat 3.6s ease-in-out infinite;
+}
+@keyframes notefloat { 0%, 100% { transform: translateY(0) rotate(-6deg); opacity: .55; } 50% { transform: translateY(-10px) rotate(7deg); opacity: 1; } }
+.p-eq {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 36px; z-index: 2;
+  display: flex; align-items: flex-end; gap: 7px; padding: 0 24px;
+}
+.p-eq i {
+  flex: 1; border-radius: 3px 3px 0 0;
+  background: linear-gradient(180deg, #f9a8d4, #f472b6 60%, #be185d);
+  opacity: .85;
+  animation: eqb 1.15s ease-in-out infinite;
+  animation-delay: calc(var(--i) * .11s);
+}
+@keyframes eqb { 0%, 100% { height: 20%; } 50% { height: 95%; } }
 .modal {
   position: fixed; inset: 0; z-index: 50;
   display: flex; align-items: center; justify-content: center; padding: 24px;
@@ -363,7 +473,7 @@ footer .dim { margin: 10px 0 0; font-size: 11.5px; letter-spacing: 2.5px; color:
   <header class="hero">
     <span class="badge">🎮 MY GAME COLLECTION</span>
     <h1>游戏大厅</h1>
-    <p class="sub">五款亲手打造的网页小游戏 · 点击卡片，即刻开玩</p>
+    <p class="sub">七款亲手打造的网页小游戏与应用 · 点击卡片，即刻开玩</p>
   </header>
   <section class="grid">
     <a class="card" href="./俄罗斯方块/index.html" target="_blank" rel="noopener" style="--ac:#a78bfa; --glow:rgba(139,92,246,.45)">
@@ -444,7 +554,7 @@ footer .dim { margin: 10px 0 0; font-size: 11.5px; letter-spacing: 2.5px; color:
         <div class="tags"><span>人机对战</span><span>完整规则</span><span>将军提示</span><span>悔棋</span></div>
       </div>
     </a>
-    <a class="card" id="villageCard" href="./荒野求生/dist/index.html" target="_blank" rel="noopener" style="--ac:#2dd4bf; --glow:rgba(20,184,166,.4)">
+    <a class="card" data-app="village" href="./荒野求生/dist/index.html" target="_blank" rel="noopener" style="--ac:#2dd4bf; --glow:rgba(20,184,166,.4)">
       <div class="art art-village" aria-hidden="true">
         <i class="v-sun"></i>
         <i class="v-cloud c1"></i>
@@ -465,32 +575,74 @@ footer .dim { margin: 10px 0 0; font-size: 11.5px; letter-spacing: 2.5px; color:
         <div class="tags"><span>经营模拟</span><span>四季轮换</span><span>自动存档</span><span class="warn server-only">需本地服务器</span></div>
       </div>
     </a>
+    <a class="card" data-app="mech" href="./机战/dist/index.html" target="_blank" rel="noopener" style="--ac:#60a5fa; --glow:rgba(59,130,246,.42)">
+      <div class="art art-mech" aria-hidden="true">
+        <i class="m-foe" style="left:44px; top:26px; animation-delay:0s"></i>
+        <i class="m-foe" style="left:120px; top:40px; animation-delay:-1.3s"></i>
+        <i class="m-foe" style="left:206px; top:22px; animation-delay:-2.4s"></i>
+        <i class="m-eb" style="left:54px; top:50px; --d:0s"></i>
+        <i class="m-eb" style="left:129px; top:64px; --d:-1.4s"></i>
+        <i class="m-eb" style="left:216px; top:46px; --d:-.7s"></i>
+        <i class="m-eb" style="left:172px; top:28px; --d:-2.1s"></i>
+        <div class="m-ship"></div>
+        <i class="m-shot" style="left:167px; bottom:62px; --d:0s"></i>
+        <i class="m-shot" style="left:175px; bottom:62px; --d:-.5s"></i>
+        <i class="m-shot" style="left:183px; bottom:62px; --d:-1s"></i>
+        <span class="art-badge server-only">⚠ 需本地服务器</span>
+        <span class="play-veil"><b>▶ 开始游戏</b></span>
+      </div>
+      <div class="body">
+        <span class="kicker">MECH WARFARE</span>
+        <h2>机战</h2>
+        <p class="desc">纵向卷轴弹幕射击：五档火力成长、三档难度、Boss 三阶段弹幕，音效实时合成零素材。</p>
+        <div class="tags"><span>弹幕射击</span><span>三档难度</span><span>Boss 战</span><span>支持触屏</span><span class="warn server-only">需本地服务器</span></div>
+      </div>
+    </a>
+    <a class="card" href="./音乐播放器/index.html" target="_blank" rel="noopener" style="--ac:#f472b6; --glow:rgba(236,72,153,.4)">
+      <div class="art art-player" aria-hidden="true">
+        <div class="p-disc"></div>
+        <i class="p-tone"></i>
+        <i class="p-note" style="left:44px; top:34px; animation-delay:-.5s">♪</i>
+        <i class="p-note" style="left:30px; top:74px; font-size:13px; animation-delay:-2.2s">♫</i>
+        <div class="p-eq">
+          <i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i>
+          <i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i><i style="--i:10"></i><i style="--i:11"></i>
+        </div>
+        <span class="play-veil"><b>▶ 打开应用</b></span>
+      </div>
+      <div class="body">
+        <span class="kicker">CLOUD MUSIC</span>
+        <h2>云音 · 音乐播放器</h2>
+        <p class="desc">零依赖纯前端音乐播放器：导入本地歌曲即播，LRC 歌词逐行滚动、48 柱频谱可视化。</p>
+        <div class="tags"><span>双击即用</span><span>LRC 歌词</span><span>频谱可视化</span><span>主题切换</span></div>
+      </div>
+    </a>
   </section>
   <footer>
-    <p class="tip">🎮 俄罗斯方块 · 贪吃蛇 · 五子棋 · 中国象棋 —— 点击卡片即可直接开玩</p>
-    <p class="tip server-only">🏡 溪畔村庄使用 ES Module 构建，需通过本地服务器运行（点击卡片查看运行指引）</p>
+    <p class="tip">🎮 俄罗斯方块 · 贪吃蛇 · 五子棋 · 中国象棋 · 云音播放器 —— 点击卡片即可直接开玩</p>
+    <p class="tip server-only">🏡 溪畔村庄与机战使用 ES Module 构建，需通过本地服务器运行（点击卡片查看运行指引）</p>
     <p class="dim">MY GAME HUB · 纯 HTML / CSS / JS 手写打造 · 2026</p>
   </footer>
 </main>
 <div class="modal" id="serverModal">
   <div class="modal-card">
-    <h3>🏡 溪畔村庄 · 需要本地服务器运行</h3>
+    <h3 id="modalTitle">🏡 溪畔村庄 · 需要本地服务器运行</h3>
     <p>这款游戏使用 ES Module 构建，直接以文件方式（file://）打开会被浏览器安全策略拦截，无法加载。任选下面一种方式即可开玩：</p>
     <div class="opt">
       <div class="opt-t">方式一 · 静态服务（推荐，无需安装依赖）</div>
       <pre>cd "D:\conda3\Transfer_Learning\my games\finished"
 python -m http.server 8080</pre>
-      <div class="opt-l">然后访问 <code>http://localhost:8080/荒野求生/dist/index.html</code></div>
+      <div class="opt-l">然后访问 <code id="modalServePath">http://localhost:8080/荒野求生/dist/index.html</code></div>
     </div>
     <div class="opt">
       <div class="opt-t">方式二 · 开发模式（进入游戏目录）</div>
-      <pre>cd "D:\conda3\Transfer_Learning\my games\finished\荒野求生"
+      <pre id="modalDevPre">cd "D:\conda3\Transfer_Learning\my games\finished\荒野求生"
 npm install
 npm run dev</pre>
-      <div class="opt-l">然后访问 <code>http://localhost:5200</code></div>
+      <div class="opt-l">然后访问 <code id="modalDevPort">http://localhost:5200</code></div>
     </div>
     <div class="modal-actions">
-      <a class="try" href="./荒野求生/dist/index.html" target="_blank" rel="noopener">仍要尝试打开 →</a>
+      <a class="try" id="modalTry" href="./荒野求生/dist/index.html" target="_blank" rel="noopener">仍要尝试打开 →</a>
       <button id="modalClose" type="button">我知道了</button>
     </div>
   </div>
@@ -498,11 +650,37 @@ npm run dev</pre>
 <script>
 (function () {
   var modal = document.getElementById('serverModal');
-  var village = document.getElementById('villageCard');
   var isFile = location.protocol === 'file:';
   if (!isFile) document.body.classList.add('served');
-  village.addEventListener('click', function (e) {
-    if (isFile) { e.preventDefault(); modal.classList.add('open'); }
+  var APPS = {
+    village: {
+      title: '🏡 溪畔村庄 · 需要本地服务器运行',
+      serve: 'http://localhost:8080/荒野求生/dist/index.html',
+      dir: '荒野求生',
+      port: 'http://localhost:5200',
+      try: './荒野求生/dist/index.html'
+    },
+    mech: {
+      title: '🤖 机战 · 需要本地服务器运行',
+      serve: 'http://localhost:8080/机战/dist/index.html',
+      dir: '机战',
+      port: 'http://localhost:5180',
+      try: './机战/dist/index.html'
+    }
+  };
+  function openModal(app) {
+    document.getElementById('modalTitle').textContent = app.title;
+    document.getElementById('modalServePath').textContent = app.serve;
+    document.getElementById('modalDevPre').textContent =
+      'cd "D:\\conda3\\Transfer_Learning\\my games\\finished\\' + app.dir + '"\nnpm install\nnpm run dev';
+    document.getElementById('modalDevPort').textContent = app.port;
+    document.getElementById('modalTry').href = app.try;
+    modal.classList.add('open');
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.card[data-app]'), function (card) {
+    card.addEventListener('click', function (e) {
+      if (isFile) { e.preventDefault(); openModal(APPS[card.getAttribute('data-app')]); }
+    });
   });
   function closeModal() { modal.classList.remove('open'); }
   document.getElementById('modalClose').addEventListener('click', closeModal);
