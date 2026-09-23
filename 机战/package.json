@@ -1,0 +1,24 @@
+{
+  "name": "mechwarfare-web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "机战 MechWarfare Web —— 纵向卷轴弹幕射击游戏（Phaser 3 + Vue 3 + Vite + TypeScript）",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "vue-tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "phaser": "^3.85.2",
+    "pinia": "^2.2.6",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vue-tsc": "^2.1.10"
+  }
+}
