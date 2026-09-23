@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="游戏大厅 —— 俄罗斯方块、贪吃蛇、五子棋、中国象棋、溪畔村庄，五款网页小游戏合集，点击即玩。" />
+<title>🎮 游戏大厅 · My Games</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>" />
+<style>
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: #e2e8f0;
+  font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  background:
+    radial-gradient(1100px 520px at 50% -100px, rgba(99, 102, 241, .16), transparent 70%),
+    #070b18;
+}
+::selection { background: #6d28d9; color: #fff; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, .14); border-radius: 8px; }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .55;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 22%, rgba(255,255,255,.5), transparent 60%),
+    radial-gradient(1px 1px at 32% 68%, rgba(255,255,255,.38), transparent 60%),
+    radial-gradient(1.5px 1.5px at 52% 12%, rgba(255,255,255,.45), transparent 60%),
+    radial-gradient(1px 1px at 72% 42%, rgba(255,255,255,.32), transparent 60%),
+    radial-gradient(2px 2px at 88% 78%, rgba(255,255,255,.42), transparent 60%),
+    radial-gradient(1px 1px at 8% 84%, rgba(255,255,255,.3), transparent 60%),
+    radial-gradient(1.5px 1.5px at 64% 88%, rgba(255,255,255,.32), transparent 60%),
+    radial-gradient(1px 1px at 44% 36%, rgba(255,255,255,.28), transparent 60%);
+  background-size: 640px 640px;
+}
+.blob { position: fixed; z-index: -2; border-radius: 50%; filter: blur(100px); pointer-events: none; }
+.b1 { width: 520px; height: 520px; background: #5b21b6; opacity: .4; top: -140px; left: -120px; animation: blobdrift 22s ease-in-out infinite alternate; }
+.b2 { width: 460px; height: 460px; background: #115e59; opacity: .38; bottom: -160px; right: -120px; animation: blobdrift 27s ease-in-out infinite alternate-reverse; }
+.b3 { width: 420px; height: 420px; background: #9f1239; opacity: .25; top: 38%; left: 56%; animation: blobdrift 31s ease-in-out infinite alternate; }
+@keyframes blobdrift { from { transform: translate(0, 0) scale(1); } to { transform: translate(70px, 46px) scale(1.18); } }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 52px 28px 44px; }
+.hero { text-align: center; margin-bottom: 48px; animation: fadown .8s ease backwards; }
+@keyframes fadown { from { opacity: 0; transform: translateY(-18px); } }
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 20px; border-radius: 999px;
+  font-size: 12px; font-weight: 600; letter-spacing: 3px;
+  color: #a5b4fc; background: rgba(129, 140, 248, .08);
+  border: 1px solid rgba(129, 140, 248, .28);
+}
+.hero h1 {
+  margin: 24px 0 14px;
+  font-size: clamp(40px, 6vw, 60px);
+  font-weight: 800; letter-spacing: 6px; line-height: 1.15;
+  background: linear-gradient(120deg, #f8fafc 15%, #c7d2fe 45%, #67e8f9 75%, #f0abfc 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero .sub { margin: 0; color: #8b9bb8; font-size: 15.5px; letter-spacing: 1px; }
+.grid { display: flex; flex-wrap: wrap; gap: 26px; justify-content: center; }
+.card {
+  position: relative;
+  display: flex; flex-direction: column;
+  flex: 1 1 340px; max-width: 400px; min-width: 0;
+  border-radius: 20px; overflow: hidden;
+  text-decoration: none; color: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02));
+  border: 1px solid rgba(255, 255, 255, .1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--ty, 0px));
+  transition: transform .18s ease-out, border-color .3s ease, box-shadow .35s ease;
+  will-change: transform;
+  animation: rise .7s cubic-bezier(.2, .7, .3, 1) backwards;
+}
+@keyframes rise { from { opacity: 0; transform: translateY(30px) scale(.96); } }
+.card:nth-child(1) { animation-delay: .05s; }
+.card:nth-child(2) { animation-delay: .13s; }
+.card:nth-child(3) { animation-delay: .21s; }
+.card:nth-child(4) { animation-delay: .29s; }
+.card:nth-child(5) { animation-delay: .37s; }
+.card:hover { --ty: -7px; border-color: var(--ac); box-shadow: 0 26px 52px -16px var(--glow); }
+.card:focus-visible { outline: 2px solid var(--ac); outline-offset: 3px; }
+.art { position: relative; height: 170px; overflow: hidden; user-select: none; -webkit-user-select: none; }
+.card .body { padding: 18px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.kicker { font-size: 10.5px; font-weight: 700; letter-spacing: .32em; color: var(--ac); }
+.card .body h2 { margin: 0; font-size: 22px; font-weight: 700; color: #f4f7ff; letter-spacing: 1px; }
+.desc { margin: 0; font-size: 13.5px; line-height: 1.75; color: #93a3bd; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.tags span {
+  font-size: 11px; padding: 4px 11px; border-radius: 999px; letter-spacing: .5px;
+  background: rgba(148, 163, 184, .1); border: 1px solid rgba(148, 163, 184, .16); color: #b6c2d9;
+}
+.tags span.warn { background: rgba(251, 191, 36, .12); border-color: rgba(251, 191, 36, .35); color: #fcd34d; }
+.play-veil {
+  position: absolute; inset: 0; z-index: 5;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(7, 10, 24, .52);
+  backdrop-filter: blur(2.5px); -webkit-backdrop-filter: blur(2.5px);
+  opacity: 0; transition: opacity .28s ease;
+}
+.card:hover .play-veil { opacity: 1; }
+.play-veil b {
+  font-size: 14.5px; font-weight: 700; letter-spacing: 3px; color: #fff;
+  padding: 10px 26px; border-radius: 999px;
+  border: 1.5px solid var(--ac); background: rgba(10, 14, 30, .6);
+  box-shadow: 0 0 26px rgba(0, 0, 0, .4), inset 0 0 18px rgba(255, 255, 255, .06);
+  transform: translateY(8px); transition: transform .28s ease;
+}
+.card:hover .play-veil b { transform: translateY(0); }
+.art-badge {
+  position: absolute; top: 12px; right: 12px; z-index: 6;
+  font-size: 11px; font-style: normal; letter-spacing: 1px;
+  padding: 4px 11px; border-radius: 999px;
+  color: #fcd34d; background: rgba(7, 10, 24, .55);
+  border: 1px solid rgba(251, 191, 36, .4);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+}
+.served .server-only { display: none !important; }
+.art-tetris { background: linear-gradient(160deg, #1e1b4b, #0f172a 70%); }
+.art-tetris::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, .08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, .08) 1px, transparent 1px);
+  background-size: 29px 29px;
+}
+.art-tetris::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(130% 95% at 50% 38%, transparent 58%, rgba(2, 4, 14, .5));
+}
+.mino {
+  position: absolute; display: grid; gap: 3px;
+  grid-template-columns: repeat(3, 24px); grid-template-rows: repeat(2, 24px);
+  animation: floaty 5s ease-in-out infinite;
+}
+.mino.o { grid-template-columns: repeat(2, 24px); }
+.mino.i { grid-template-columns: 24px; grid-template-rows: repeat(4, 24px); }
+.mino b {
+  background: var(--c); border-radius: 5px;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, .35), inset 0 -3px 0 rgba(0, 0, 0, .28), 0 4px 10px rgba(0, 0, 0, .35);
+}
+@keyframes floaty { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-7px) rotate(1.6deg); } }
+.art-snake { background: linear-gradient(150deg, #052e1b, #022c22 75%); }
+.art-snake::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,.028) 25%, transparent 25% 75%, rgba(255,255,255,.028) 75%),
+    linear-gradient(45deg, rgba(255,255,255,.028) 25%, transparent 25% 75%, rgba(255,255,255,.028) 75%);
+  background-size: 48px 48px; background-position: 0 0, 24px 24px;
+}
+.s-cell {
+  position: absolute; width: 22px; height: 22px; border-radius: 7px;
+  background: linear-gradient(155deg, #6ee7a0, #22c55e);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.35), inset 0 -3px 0 rgba(0,0,0,.22), 0 3px 8px rgba(0,0,0,.32);
+  animation: cellpulse 2.2s ease-in-out infinite;
+  animation-delay: calc(var(--i) * .14s);
+}
+@keyframes cellpulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+.s-head {
+  position: absolute; width: 26px; height: 26px; border-radius: 8px;
+  background: linear-gradient(155deg, #86efac, #16a34a);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.4), inset 0 -3px 0 rgba(0,0,0,.25), 0 4px 10px rgba(0,0,0,.38);
+  animation: cellpulse 2.2s ease-in-out infinite;
+}
+.s-head::before, .s-head::after {
+  content: ''; position: absolute; right: 3px; width: 4px; height: 4px;
+  border-radius: 50%; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.25);
+}
+.s-head::before { top: 5px; }
+.s-head::after { bottom: 5px; }
+.s-apple {
+  position: absolute; right: 56px; top: 64px; width: 16px; height: 16px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fca5a5, #ef4444 60%);
+  animation: appleglow 2s ease-in-out infinite;
+}
+.s-apple::before { content: ''; position: absolute; left: 3px; top: 3px; width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.85); }
+.s-apple::after { content: ''; position: absolute; left: 8px; top: -3px; width: 7px; height: 4px; border-radius: 4px; background: #22c55e; transform: rotate(-24deg); }
+@keyframes appleglow { 0%, 100% { box-shadow: 0 0 10px rgba(239,68,68,.45); } 50% { box-shadow: 0 0 20px rgba(239,68,68,.8); } }
+.art-gomoku {
+  background:
+    repeating-linear-gradient(95deg, rgba(255,255,255,.06) 0 2px, transparent 2px 11px, rgba(80,45,10,.05) 11px 13px, transparent 13px 27px),
+    linear-gradient(135deg, #e7ba7c, #d09a52 55%, #c08640);
+}
+.art-gomoku::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(93,53,15,.22) 0 1.5px, transparent 1.5px 30px),
+    repeating-linear-gradient(90deg, rgba(93,53,15,.22) 0 1.5px, transparent 1.5px 30px);
+  box-shadow: inset 0 0 0 2px rgba(93,53,15,.18);
+}
+.art-gomoku::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(125% 90% at 50% 40%, transparent 55%, rgba(60,30,5,.22));
+}
+.stone { position: absolute; width: 24px; height: 24px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 2; }
+.stone.b { background: radial-gradient(circle at 32% 28%, #6b7280, #17181c 62%); box-shadow: 0 4px 8px rgba(60,30,5,.4), inset 0 -2px 3px rgba(0,0,0,.25); }
+.stone.w { background: radial-gradient(circle at 32% 28%, #ffffff, #d6d3d1 68%); box-shadow: 0 4px 8px rgba(60,30,5,.32), inset 0 -2px 3px rgba(0,0,0,.12); }
+.stone.last::after {
+  content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #f87171; box-shadow: 0 0 6px rgba(248, 113, 113, .9);
+}
+.g-line {
+  position: absolute; z-index: 1; left: 40px; top: 125px; width: 188px; height: 3px; border-radius: 2px;
+  background: linear-gradient(90deg, rgba(251,191,36,.25), #fbbf24 30%, #f59e0b 70%, rgba(251,191,36,.25));
+  box-shadow: 0 0 10px rgba(251, 191, 36, .55);
+  transform: rotate(-27.9deg); transform-origin: 0 50%;
+  animation: linepulse 2.6s ease-in-out infinite;
+}
+@keyframes linepulse { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+.art-xiangqi { background: linear-gradient(160deg, #efcd92, #dcae66 60%, #d3a057); }
+.art-xiangqi::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(101,60,20,.18) 0 1.5px, transparent 1.5px 10%),
+    repeating-linear-gradient(90deg, rgba(101,60,20,.25) 0 1.5px, transparent 1.5px 12.5%);
+  box-shadow: inset 0 0 0 2px rgba(101, 60, 20, .2);
+}
+.x-river {
+  position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); height: 36px;
+  display: flex; align-items: center; justify-content: space-around;
+  background: rgba(140, 85, 35, .13);
+  border-top: 1.5px solid rgba(110, 60, 20, .28);
+  border-bottom: 1.5px solid rgba(110, 60, 20, .28);
+}
+.x-river span {
+  font-family: "KaiTi", "STKaiti", "SimSun", serif;
+  font-size: 15px; letter-spacing: 9px; padding-left: 9px;
+  color: rgba(110, 60, 20, .62);
+}
+.x-piece {
+  position: absolute; width: 58px; height: 58px; border-radius: 50%; z-index: 2;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "KaiTi", "STKaiti", "SimSun", serif;
+  font-size: 28px; font-weight: 700;
+  background: radial-gradient(circle at 35% 30%, #fffdf5, #f0e2c0 70%, #e2cf9d);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .12);
+  transition: transform .45s cubic-bezier(.2, .8, .3, 1);
+}
+.x-piece.red { color: #c92a2a; border: 2.5px solid #c92a2a; left: 15%; bottom: 15px; box-shadow: 0 6px 14px rgba(70,40,10,.35), inset 0 0 0 4px rgba(201,42,42,.08); }
+.x-piece.black { color: #1f2937; border: 2.5px solid #374151; right: 15%; top: 15px; box-shadow: 0 6px 14px rgba(70,40,10,.35), inset 0 0 0 4px rgba(31,41,55,.08); }
+.card:hover .x-piece.red { transform: translateX(14px); }
+.card:hover .x-piece.black { transform: translateX(-14px); }
+.art-village { background: linear-gradient(180deg, #aee3f8 0%, #d8f3fc 45%, #fdf6d8 75%, #fdf0c0 100%); }
+.v-sun {
+  position: absolute; top: 20px; right: 34px; width: 44px; height: 44px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #fff3bf, #ffe066 70%);
+  animation: sunglow 3.2s ease-in-out infinite;
+}
+@keyframes sunglow {
+  0%, 100% { box-shadow: 0 0 32px 9px rgba(253, 224, 71, .7); }
+  50% { box-shadow: 0 0 48px 15px rgba(253, 224, 71, .92); }
+}
+.v-cloud { position: absolute; width: 64px; height: 16px; border-radius: 999px; background: rgba(255,255,255,.9); filter: blur(1px); animation: driftx 30s linear infinite; }
+.v-cloud.c1 { top: 30px; left: -80px; }
+.v-cloud.c2 { top: 56px; left: -90px; width: 44px; height: 12px; opacity: .7; animation-duration: 22s; animation-delay: -9s; }
+@keyframes driftx { from { transform: translateX(0); } to { transform: translateX(560px); } }
+.v-hill { position: absolute; border-radius: 50%; }
+.v-hill.h1 { width: 250px; height: 120px; left: -60px; bottom: 20px; background: #9adba8; }
+.v-hill.h2 { width: 270px; height: 130px; right: -60px; bottom: 24px; background: #74c98a; }
+.v-field {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 30px;
+  background: repeating-linear-gradient(90deg, rgba(202,138,20,.24) 0 5px, transparent 5px 16px), #f8d478;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, .4);
+}
+.v-house { position: absolute; left: 26px; bottom: 30px; width: 46px; height: 32px; background: #fff; box-shadow: 0 2px 0 rgba(0,0,0,.06); }
+.v-house .roof {
+  position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 30px solid transparent; border-right: 30px solid transparent; border-bottom: 19px solid #d9534f;
+}
+.v-house .win { position: absolute; right: 5px; top: 9px; width: 9px; height: 9px; background: #7cc7f0; border: 1.5px solid #fff; border-radius: 2px; }
+.v-house .door { position: absolute; left: 50%; transform: translateX(-50%); bottom: 0; width: 11px; height: 15px; background: #8b5a2b; border-radius: 5px 5px 0 0; }
+.v-tree { position: absolute; width: 32px; height: 32px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #6fce8a, #3d9e5d 75%); }
+.v-tree::after { content: ''; position: absolute; left: 50%; bottom: -7px; transform: translateX(-50%); width: 5px; height: 9px; background: #8b5a2b; border-radius: 2px; }
+.v-tree.t1 { right: 46px; bottom: 36px; }
+.v-tree.t2 { right: 92px; bottom: 38px; width: 24px; height: 24px; opacity: .95; }
+.modal {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  background: rgba(4, 7, 18, .72);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  opacity: 0; visibility: hidden;
+  transition: opacity .3s ease, visibility .3s;
+}
+.modal.open { opacity: 1; visibility: visible; }
+.modal-card {
+  width: min(560px, 100%); max-height: 86vh; overflow-y: auto;
+  border-radius: 22px; padding: 30px 32px;
+  background: linear-gradient(180deg, #141b31, #0e1424);
+  border: 1px solid rgba(255, 255, 255, .12);
+  box-shadow: 0 40px 90px -20px rgba(0, 0, 0, .7);
+  transform: translateY(14px) scale(.97);
+  transition: transform .3s ease;
+}
+.modal.open .modal-card { transform: none; }
+.modal-card h3 { margin: 0 0 12px; font-size: 19px; color: #f4f7ff; letter-spacing: 1px; }
+.modal-card > p { margin: 0 0 20px; font-size: 13.5px; line-height: 1.85; color: #9fb0cc; }
+.opt { margin-bottom: 18px; }
+.opt-t { font-size: 13px; font-weight: 700; color: #7dd3fc; margin-bottom: 9px; letter-spacing: 1px; }
+.opt pre {
+  margin: 0 0 9px; padding: 12px 15px; border-radius: 10px;
+  background: #070c1a; border: 1px solid rgba(255, 255, 255, .09);
+  color: #a5f3fc; overflow-x: auto;
+  font: 12.5px/1.85 ui-monospace, SFMono-Regular, Consolas, "Courier New", monospace;
+}
+.opt-l { font-size: 12.5px; color: #8b9bb8; line-height: 1.9; }
+.opt-l code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Courier New", monospace;
+  font-size: 12px; color: #7dd3fc;
+  background: rgba(125, 211, 252, .1); border: 1px solid rgba(125, 211, 252, .22);
+  padding: 2px 8px; border-radius: 6px;
+  word-break: break-all;
+}
+.modal-actions { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 24px; }
+.modal-actions .try { font-size: 13px; color: #8b9bb8; text-decoration: none; }
+.modal-actions .try:hover { color: #c7d2fe; }
+.modal-actions button {
+  cursor: pointer; border: none; border-radius: 999px; padding: 11px 30px;
+  font-size: 14px; font-weight: 700; letter-spacing: 2px; color: #fff;
+  font-family: inherit;
+  background: linear-gradient(120deg, #6366f1, #8b5cf6 60%, #a855f7);
+  box-shadow: 0 10px 26px -8px rgba(139, 92, 246, .55);
+  transition: filter .2s ease;
+}
+.modal-actions button:hover { filter: brightness(1.12); }
+footer {
+  margin-top: 58px; padding-top: 26px; text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  animation: rise .7s .45s ease backwards;
+}
+footer .tip { margin: 0 0 6px; font-size: 13px; color: #8b9bb8; line-height: 2; }
+footer .dim { margin: 10px 0 0; font-size: 11.5px; letter-spacing: 2.5px; color: #5b6b88; }
+@media (max-width: 600px) {
+  .wrap { padding: 38px 18px 36px; }
+  .card { flex-basis: 100%; max-width: none; }
+  .hero h1 { letter-spacing: 3px; }
+  .art { height: 158px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+<i class="blob b1"></i>
+<i class="blob b2"></i>
+<i class="blob b3"></i>
+<main class="wrap">
+  <header class="hero">
+    <span class="badge">🎮 MY GAME COLLECTION</span>
+    <h1>游戏大厅</h1>
+    <p class="sub">五款亲手打造的网页小游戏 · 点击卡片，即刻开玩</p>
+  </header>
+  <section class="grid">
+    <a class="card" href="./俄罗斯方块/index.html" target="_blank" rel="noopener" style="--ac:#a78bfa; --glow:rgba(139,92,246,.45)">
+      <div class="art art-tetris" aria-hidden="true">
+        <div class="mino" style="--c:#a855f7; left:26px; top:38px; animation-delay:-.6s">
+          <b style="grid-area:1/2"></b><b style="grid-area:2/1"></b><b style="grid-area:2/2"></b><b style="grid-area:2/3"></b>
+        </div>
+        <div class="mino o" style="--c:#facc15; left:152px; top:28px; animation-delay:-2.1s">
+          <b style="grid-area:1/1"></b><b style="grid-area:1/2"></b><b style="grid-area:2/1"></b><b style="grid-area:2/2"></b>
+        </div>
+        <div class="mino i" style="--c:#22d3ee; right:26px; top:32px; animation-delay:-3.4s">
+          <b style="grid-area:1/1"></b><b style="grid-area:2/1"></b><b style="grid-area:3/1"></b><b style="grid-area:4/1"></b>
+        </div>
+        <div class="mino" style="--c:#fb923c; left:118px; top:96px; animation-delay:-1.4s">
+          <b style="grid-area:1/1"></b><b style="grid-area:2/1"></b><b style="grid-area:2/2"></b><b style="grid-area:2/3"></b>
+        </div>
+        <span class="play-veil"><b>▶ 开始游戏</b></span>
+      </div>
+      <div class="body">
+        <span class="kicker">TETRIS</span>
+        <h2>俄罗斯方块</h2>
+        <p class="desc">现代规则实现：SRS 踢墙 + 7-Bag 随机器，支持 Hold 暂存、硬降与移动端触屏。</p>
+        <div class="tags"><span>单人</span><span>SRS 踢墙</span><span>7-Bag</span><span>支持触屏</span></div>
+      </div>
+    </a>
+    <a class="card" href="./贪吃蛇/index.html" target="_blank" rel="noopener" style="--ac:#4ade80; --glow:rgba(34,197,94,.42)">
+      <div class="art art-snake" aria-hidden="true">
+        <i class="s-cell" style="left:18px; top:112px; --i:0"></i>
+        <i class="s-cell" style="left:43px; top:112px; --i:1"></i>
+        <i class="s-cell" style="left:68px; top:112px; --i:2"></i>
+        <i class="s-cell" style="left:93px; top:112px; --i:3"></i>
+        <i class="s-cell" style="left:118px; top:112px; --i:4"></i>
+        <i class="s-cell" style="left:143px; top:112px; --i:5"></i>
+        <i class="s-cell" style="left:143px; top:87px; --i:6"></i>
+        <i class="s-cell" style="left:143px; top:62px; --i:7"></i>
+        <i class="s-head" style="left:166px; top:60px"></i>
+        <i class="s-apple"></i>
+        <span class="play-veil"><b>▶ 开始游戏</b></span>
+      </div>
+      <div class="body">
+        <span class="kicker">SNAKE</span>
+        <h2>贪吃蛇</h2>
+        <p class="desc">经典玩法全新演绎：单人闯关、双人同屏对战，附带 AI 自动寻路演示。</p>
+        <div class="tags"><span>单人 / 双人</span><span>AI 演示</span><span>手机滑动</span></div>
+      </div>
+    </a>
+    <a class="card" href="./五子棋/index.html" target="_blank" rel="noopener" style="--ac:#fbbf24; --glow:rgba(245,158,11,.4)">
+      <div class="art art-gomoku" aria-hidden="true">
+        <i class="g-line"></i>
+        <i class="stone b" style="left:46px; top:124px"></i>
+        <i class="stone b" style="left:86px; top:103px"></i>
+        <i class="stone b" style="left:126px; top:81px"></i>
+        <i class="stone b" style="left:166px; top:60px"></i>
+        <i class="stone b last" style="left:206px; top:39px"></i>
+        <i class="stone w" style="left:64px; top:54px"></i>
+        <i class="stone w" style="left:208px; top:132px"></i>
+        <i class="stone w" style="left:258px; top:96px"></i>
+        <span class="play-veil"><b>▶ 开始游戏</b></span>
+      </div>
+      <div class="body">
+        <span class="kicker">GOMOKU</span>
+        <h2>五子棋</h2>
+        <p class="desc">15×15 连五制胜：Negamax + α-β 剪枝三档 AI，含 Renju 禁手、悔棋与存档。</p>
+        <div class="tags"><span>人机对战</span><span>三档 AI</span><span>禁手规则</span><span>存档</span></div>
+      </div>
+    </a>
+    <a class="card" href="./中国象棋/index.html" target="_blank" rel="noopener" style="--ac:#f87171; --glow:rgba(239,68,68,.4)">
+      <div class="art art-xiangqi" aria-hidden="true">
+        <div class="x-river"><span>楚 河</span><span>漢 界</span></div>
+        <div class="x-piece red">帥</div>
+        <div class="x-piece black">將</div>
+        <span class="play-veil"><b>▶ 开始游戏</b></span>
+      </div>
+      <div class="body">
+        <span class="kicker">XIANGQI</span>
+        <h2>中国象棋</h2>
+        <p class="desc">全规则楚河汉界：蹩马腿、塞象眼、炮翻山、飞将照面，将死困毙精准判定。</p>
+        <div class="tags"><span>人机对战</span><span>完整规则</span><span>将军提示</span><span>悔棋</span></div>
+      </div>
+    </a>
+    <a class="card" id="villageCard" href="./荒野求生/dist/index.html" target="_blank" rel="noopener" style="--ac:#2dd4bf; --glow:rgba(20,184,166,.4)">
+      <div class="art art-village" aria-hidden="true">
+        <i class="v-sun"></i>
+        <i class="v-cloud c1"></i>
+        <i class="v-cloud c2"></i>
+        <i class="v-hill h1"></i>
+        <i class="v-hill h2"></i>
+        <div class="v-field"></div>
+        <div class="v-house"><i class="roof"></i><i class="win"></i><i class="door"></i></div>
+        <i class="v-tree t2"></i>
+        <i class="v-tree t1"></i>
+        <span class="art-badge server-only">⚠ 需本地服务器</span>
+        <span class="play-veil"><b>▶ 开始游戏</b></span>
+      </div>
+      <div class="body">
+        <span class="kicker">RIVERSIDE VILLAGE</span>
+        <h2>溪畔村庄</h2>
+        <p class="desc">治愈系村庄经营模拟：为村民分配农活，看四季春种秋收、赶集篝火，进度自动存档。</p>
+        <div class="tags"><span>经营模拟</span><span>四季轮换</span><span>自动存档</span><span class="warn server-only">需本地服务器</span></div>
+      </div>
+    </a>
+  </section>
+  <footer>
+    <p class="tip">🎮 俄罗斯方块 · 贪吃蛇 · 五子棋 · 中国象棋 —— 点击卡片即可直接开玩</p>
+    <p class="tip server-only">🏡 溪畔村庄使用 ES Module 构建，需通过本地服务器运行（点击卡片查看运行指引）</p>
+    <p class="dim">MY GAME HUB · 纯 HTML / CSS / JS 手写打造 · 2026</p>
+  </footer>
+</main>
+<div class="modal" id="serverModal">
+  <div class="modal-card">
+    <h3>🏡 溪畔村庄 · 需要本地服务器运行</h3>
+    <p>这款游戏使用 ES Module 构建，直接以文件方式（file://）打开会被浏览器安全策略拦截，无法加载。任选下面一种方式即可开玩：</p>
+    <div class="opt">
+      <div class="opt-t">方式一 · 静态服务（推荐，无需安装依赖）</div>
+      <pre>cd "D:\conda3\Transfer_Learning\my games\finished"
+python -m http.server 8080</pre>
+      <div class="opt-l">然后访问 <code>http://localhost:8080/荒野求生/dist/index.html</code></div>
+    </div>
+    <div class="opt">
+      <div class="opt-t">方式二 · 开发模式（进入游戏目录）</div>
+      <pre>cd "D:\conda3\Transfer_Learning\my games\finished\荒野求生"
+npm install
+npm run dev</pre>
+      <div class="opt-l">然后访问 <code>http://localhost:5200</code></div>
+    </div>
+    <div class="modal-actions">
+      <a class="try" href="./荒野求生/dist/index.html" target="_blank" rel="noopener">仍要尝试打开 →</a>
+      <button id="modalClose" type="button">我知道了</button>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var modal = document.getElementById('serverModal');
+  var village = document.getElementById('villageCard');
+  var isFile = location.protocol === 'file:';
+  if (!isFile) document.body.classList.add('served');
+  village.addEventListener('click', function (e) {
+    if (isFile) { e.preventDefault(); modal.classList.add('open'); }
+  });
+  function closeModal() { modal.classList.remove('open'); }
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+  var canTilt = matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (canTilt) {
+    Array.prototype.forEach.call(document.querySelectorAll('.card'), function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var r = card.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.setProperty('--ry', (x * 7).toFixed(2) + 'deg');
+        card.style.setProperty('--rx', (-y * 6).toFixed(2) + 'deg');
+      });
+      card.addEventListener('mouseleave', function () {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+/* ============================================================
+   style.css —— 五子棋界面样式
+   ============================================================ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #2b2d31 0%, #1b1c1f 100%);
+  color: #e8e8e8;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* ---------- 整体布局 ---------- */
+.app {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 1080px;
+  width: 100%;
+}
+
+.board-wrap {
+  background: #3a2c18;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  /* 高度自适应（正方形画布由 JS 控制宽度） */
+}
+
+#board {
+  display: block;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ---------- 侧边面板 ---------- */
+.panel {
+  width: 320px;
+  background: #26282d;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 720px;
+  overflow-y: auto;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+}
+.title .sub {
+  font-size: 14px;
+  color: #999;
+  font-weight: 400;
+}
+
+/* ---------- 状态 ---------- */
+.status {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 10px;
+  background: #1e2024;
+  border-radius: 8px;
+  border-left: 4px solid #4a9eff;
+  transition: all 0.2s;
+}
+.status.done {
+  border-left-color: #ffb03a;
+}
+
+/* ---------- 设置 ---------- */
+.settings h2,
+.records h2 {
+  font-size: 14px;
+  color: #9aa0a8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.settings .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.settings select {
+  background: #1e2024;
+  color: #e8e8e8;
+  border: 1px solid #3a3d42;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 14px;
+  min-width: 140px;
+}
+
+.settings .hint {
+  font-size: 12px;
+  color: #8b9198;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+/* ---------- 按钮 ---------- */
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.actions button {
+  padding: 10px 0;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background: #3a3d42;
+  color: #e8e8e8;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.actions button:hover {
+  background: #4a4e55;
+}
+.actions button:active {
+  transform: translateY(1px);
+}
+.actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- 走子记录 ---------- */
+.records {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.move-list {
+  list-style: none;
+  overflow-y: auto;
+  max-height: 240px;
+  background: #1e2024;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.move-list li {
+  font-size: 13px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.move-list li:nth-child(odd) {
+  background: #26282d;
+}
+
+/* ---------- Toast 提示 ---------- */
+.toast {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: rgba(20, 20, 22, 0.92);
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 20px;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  z-index: 99;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

@@ -1,0 +1,146 @@
+/* ============ 中国象棋页面样式 ============ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #2b2320 0%, #3e2f28 55%, #2b2320 100%);
+  font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  color: #e8dcc8;
+  display: flex;
+  justify-content: center;
+  padding: 18px 12px 40px;
+}
+
+#app { width: 100%; max-width: 980px; }
+
+header { text-align: center; margin-bottom: 16px; }
+header h1 {
+  font-family: KaiTi, STKaiti, serif;
+  font-size: 34px;
+  letter-spacing: 10px;
+  color: #f3e2c0;
+  text-shadow: 0 2px 8px rgba(0,0,0,.5);
+}
+.subtitle { margin-top: 4px; font-size: 13px; color: #a89880; letter-spacing: 4px; }
+
+main {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* ---------- 棋盘 ---------- */
+#board-wrap {
+  position: relative;
+  width: 552px;
+  max-width: 100%;
+  border: 10px solid #5d4037;
+  border-radius: 12px;
+  box-shadow: 0 10px 34px rgba(0,0,0,.55), inset 0 0 18px rgba(93,64,55,.4);
+  background: #5d4037;
+  line-height: 0;
+}
+#board { width: 100%; height: auto; display: block; cursor: pointer; }
+
+/* 终局遮罩 */
+#overlay {
+  position: absolute; inset: 0;
+  background: rgba(20, 14, 10, .62);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+#overlay.hidden { display: none; }
+.overlay-card {
+  text-align: center;
+  background: rgba(243, 226, 192, .96);
+  color: #4a2c2a;
+  padding: 28px 44px;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.6);
+}
+#overlay-text {
+  font-family: KaiTi, STKaiti, serif;
+  font-size: 30px; font-weight: bold; letter-spacing: 4px;
+  margin-bottom: 16px;
+}
+#overlay-btn {
+  font-size: 16px; padding: 8px 26px;
+  background: #c0392b; color: #fff;
+  border: none; border-radius: 6px; cursor: pointer;
+}
+#overlay-btn:hover { background: #a93226; }
+
+/* ---------- 右侧面板 ---------- */
+#panel { width: 300px; max-width: 100%; }
+.card {
+  background: rgba(255, 250, 240, .07);
+  border: 1px solid rgba(232, 220, 200, .16);
+  border-radius: 10px;
+  padding: 16px;
+  backdrop-filter: blur(2px);
+}
+
+.status {
+  text-align: center;
+  font-family: KaiTi, STKaiti, serif;
+  font-size: 22px;
+  color: #ffd54f;
+  letter-spacing: 2px;
+  padding: 10px 6px;
+  border-bottom: 1px dashed rgba(232,220,200,.25);
+  margin-bottom: 12px;
+  min-height: 46px;
+}
+
+.controls { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; font-size: 14px; }
+.controls label { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.controls select {
+  flex: 1;
+  background: #4a382f; color: #f3e2c0;
+  border: 1px solid #6d544a; border-radius: 5px;
+  padding: 4px 8px; font-size: 14px; outline: none;
+}
+
+.btns { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
+.btns button {
+  padding: 8px 0;
+  font-size: 15px;
+  font-family: inherit;
+  color: #f3e2c0;
+  background: linear-gradient(180deg, #8d4a3a, #6d382c);
+  border: 1px solid #a05a48;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: filter .15s, transform .05s;
+}
+.btns button:hover { filter: brightness(1.15); }
+.btns button:active { transform: scale(.97); }
+
+.moves-title { font-size: 14px; color: #c9b896; margin-bottom: 6px; letter-spacing: 2px; }
+#move-list {
+  list-style: none;
+  max-height: 260px;
+  overflow-y: auto;
+  background: rgba(0,0,0,.22);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+  font-family: KaiTi, STKaiti, serif;
+}
+#move-list li { display: flex; gap: 10px; padding: 2px 0; }
+#move-list .no { width: 2em; color: #8d7b63; }
+#move-list .r { color: #ffab91; min-width: 6.5em; }
+#move-list .b { color: #cfd8dc; }
+
+#move-list::-webkit-scrollbar { width: 6px; }
+#move-list::-webkit-scrollbar-thumb { background: #6d544a; border-radius: 3px; }
+
+.tips { margin-top: 12px; font-size: 12px; color: #a89880; line-height: 1.8; }
+
+@media (max-width: 900px) {
+  main { flex-direction: column; align-items: center; }
+  #panel { width: 552px; max-width: 100%; }
+}

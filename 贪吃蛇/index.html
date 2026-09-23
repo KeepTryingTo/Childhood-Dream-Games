@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>贪吃蛇</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>贪吃蛇</h1>
+      <p class="subtitle">固定时间步 · 穿墙 / 障碍 / 特殊食物 · AI 自动寻路</p>
+    </header>
+
+    <main>
+      <div id="board-wrap">
+        <canvas id="board"></canvas>
+        <div id="overlay" class="hidden">
+          <div class="overlay-card">
+            <div id="overlay-text">GAME OVER</div>
+            <div id="overlay-sub"></div>
+            <button id="overlay-btn">再来一局</button>
+          </div>
+        </div>
+      </div>
+
+      <aside id="panel">
+        <div class="card">
+          <div class="hud">
+            <div class="hud-item">
+              <span class="hud-label">得分</span>
+              <span class="hud-value" id="score">0</span>
+            </div>
+            <div class="hud-item" id="best-row">
+              <span class="hud-label">最高分</span>
+              <span class="hud-value" id="best">0</span>
+            </div>
+          </div>
+          <div id="status" class="status">按任意方向键开始</div>
+
+          <div class="controls">
+            <label>难度
+              <select id="difficulty">
+                <option value="easy" selected>简单（20×20 · 150ms）</option>
+                <option value="medium">中等（25×25 · 100ms）</option>
+                <option value="hard">困难（30×30 · 70ms）</option>
+              </select>
+            </label>
+            <label class="chk"><input type="checkbox" id="chk-ai"> AI 自动寻路（单人演示）</label>
+            <label class="chk"><input type="checkbox" id="chk-two"> 双人对战（WASD vs 方向键）</label>
+            <label class="chk"><input type="checkbox" id="chk-wrap"> 穿墙模式（出界从对侧进入）</label>
+            <label class="chk"><input type="checkbox" id="chk-obstacle"> 随机障碍物（12 块，撞上即死）</label>
+            <label class="chk"><input type="checkbox" id="chk-accel"> 动态加速（每吃 5 个提速）</label>
+          </div>
+
+          <div class="btns">
+            <button id="btn-new">新游戏</button>
+            <button id="btn-pause">暂停</button>
+            <button id="btn-sound">音效：开</button>
+          </div>
+
+          <div class="tips">
+            方向键 / WASD 移动 · 空格暂停 · R 重开<br>
+            手机：滑动画布控制方向<br>
+            特殊食物（限时 50 tick）：<span class="sp sp-bonus">分</span>+50
+            <span class="sp sp-slow">慢</span>减速
+            <span class="sp sp-shrink">缩</span>-2 节 +20
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="js/game.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

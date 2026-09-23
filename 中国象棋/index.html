@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中国象棋</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>中国象棋</h1>
+      <p class="subtitle">规则完整 · 人机对战 · 悔棋存档</p>
+    </header>
+
+    <main>
+      <div id="board-wrap">
+        <canvas id="board"></canvas>
+        <div id="overlay" class="hidden">
+          <div class="overlay-card">
+            <div id="overlay-text">红方胜</div>
+            <button id="overlay-btn">再来一局</button>
+          </div>
+        </div>
+      </div>
+
+      <aside id="panel">
+        <div class="card">
+          <div id="status" class="status">红方行棋</div>
+
+          <div class="controls">
+            <label>模式
+              <select id="mode">
+                <option value="ai" selected>人机对战</option>
+                <option value="pvp">双人对战</option>
+              </select>
+            </label>
+            <span id="ai-opts">
+              <label>AI执子
+                <select id="ai-side">
+                  <option value="black" selected>黑</option>
+                  <option value="red">红</option>
+                </select>
+              </label>
+              <label>难度
+                <select id="difficulty">
+                  <option value="easy">简单</option>
+                  <option value="medium" selected>中等</option>
+                  <option value="hard">困难</option>
+                </select>
+              </label>
+            </span>
+          </div>
+
+          <div class="btns">
+            <button id="btn-new">新对局</button>
+            <button id="btn-undo">悔棋</button>
+            <button id="btn-save">存档</button>
+            <button id="btn-load">读档</button>
+            <button id="btn-sound">音效：开</button>
+          </div>
+
+          <div class="moves-title">走子记录</div>
+          <ol id="move-list"></ol>
+
+          <div class="tips">
+            点选己方棋子 → 绿点空位落子 / 红环吃子<br>
+            橙色角框 = 上一步着法 · 红圈 = 被将军
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="js/model.js"></script>
+  <script src="js/rules.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

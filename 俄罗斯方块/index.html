@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>俄罗斯方块</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" class="logo-icon"><path d="M3 3h6v6H3zM10.5 3h6v6h-6zM3 10.5h6v6H3zM10.5 10.5h6v6h-6zM18 10.5h3v6h-3z" fill="currentColor"/></svg>
+        <span>俄罗斯方块</span>
+        <em>TETRIS · 经典规则</em>
+      </div>
+      <button id="btn-sound" class="icon-btn" title="音效开关">
+        <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z" fill="currentColor"/></svg>
+      </button>
+    </header>
+
+    <main class="main">
+      <!-- 左：游戏区 -->
+      <section class="board-area glass">
+        <div class="board-wrap">
+          <canvas id="board" class="board"></canvas>
+          <div id="overlay" class="overlay">
+            <div class="overlay-card">
+              <div id="overlay-title">俄罗斯方块</div>
+              <button id="overlay-btn" class="overlay-btn">开始游戏</button>
+              <div class="overlay-keys">
+                ←→ 移动 · ↑ 旋转 · ↓ 软降<br>
+                空格 硬降 · C 暂存 · P 暂停 · R 重开
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 右：侧边栏 -->
+      <aside class="sidebar">
+        <div class="panel glass">
+          <div class="panel-title">HOLD <em>(C)</em></div>
+          <canvas id="hold" class="mini-canvas"></canvas>
+        </div>
+
+        <div class="panel glass">
+          <div class="panel-title">NEXT</div>
+          <canvas id="next0" class="mini-canvas"></canvas>
+          <canvas id="next1" class="mini-canvas small"></canvas>
+          <canvas id="next2" class="mini-canvas small"></canvas>
+        </div>
+
+        <div class="panel glass">
+          <div class="panel-title">STATS</div>
+          <div class="stat"><span>分数</span><b id="score">0</b></div>
+          <div class="stat"><span>最高分</span><b id="best" class="accent">0</b></div>
+          <div class="stat"><span>等级</span><b id="level">1</b></div>
+          <div class="stat"><span>消行</span><b id="lines">0</b></div>
+          <div class="stat status-row"><span>状态</span><b id="status" class="accent">按 Enter 开始</b></div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- 移动端触摸按钮（E7） -->
+    <div class="touch-controls">
+      <div class="touch-row">
+        <button id="touch-left" class="touch-btn">◀</button>
+        <button id="touch-rotate" class="touch-btn">⟳</button>
+        <button id="touch-right" class="touch-btn">▶</button>
+      </div>
+      <div class="touch-row">
+        <button id="touch-hold" class="touch-btn">HOLD</button>
+        <button id="touch-drop" class="touch-btn big">⤓</button>
+        <button id="touch-down" class="touch-btn">▼</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="js/model.js"></script>
+  <script src="js/rules.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>五子棋 · Gomoku</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- ==================== 棋盘区域 ==================== -->
+    <div class="board-wrap">
+      <canvas id="board"></canvas>
+    </div>
+
+    <!-- ==================== 侧边控制面板 ==================== -->
+    <aside class="panel">
+      <h1 class="title">五子棋 <span class="sub">Gomoku</span></h1>
+
+      <!-- 状态提示 -->
+      <div id="status" class="status">轮到 黑方</div>
+
+      <!-- 对局设置 -->
+      <section class="settings">
+        <h2>对局设置</h2>
+        <label class="row">
+          模式
+          <select id="mode">
+            <option value="pvp">双人对战</option>
+            <option value="pve">人机对战</option>
+          </select>
+        </label>
+        <label class="row" id="difficultyRow">
+          难度
+          <select id="difficulty">
+            <option value="easy">简单</option>
+            <option value="medium" selected>中等</option>
+            <option value="hard">困难</option>
+          </select>
+        </label>
+        <label class="row">
+          规则
+          <select id="rule">
+            <option value="free" selected>自由规则</option>
+            <option value="renju">Renju（黑方禁手）</option>
+          </select>
+        </label>
+        <p class="hint" id="ruleHint">自由规则：任意方向连五（含长连）即胜。</p>
+      </section>
+
+      <!-- 操作按钮 -->
+      <section class="actions">
+        <button id="btn-restart">重新开局</button>
+        <button id="btn-undo">悔棋</button>
+        <button id="btn-save">存档</button>
+        <button id="btn-load">读档</button>
+      </section>
+
+      <!-- 走子记录 -->
+      <section class="records">
+        <h2>走子记录</h2>
+        <ol id="moveList" class="move-list"></ol>
+      </section>
+    </aside>
+  </div>
+
+  <!-- 提示 Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- 按依赖顺序引入脚本（普通 script，兼容 file:// 直接打开） -->
+  <script src="js/model.js"></script>
+  <script src="js/rules.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
