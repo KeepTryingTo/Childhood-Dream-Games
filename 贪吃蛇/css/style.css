@@ -1,0 +1,161 @@
+/* ============ 贪吃蛇页面样式 ============ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #1f2a24 0%, #2b3a31 55%, #1f2a24 100%);
+  font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  color: #e8f0e4;
+  display: flex;
+  justify-content: center;
+  padding: 18px 12px 40px;
+}
+
+#app { width: 100%; max-width: 1020px; }
+
+header { text-align: center; margin-bottom: 16px; }
+header h1 {
+  font-size: 32px;
+  letter-spacing: 10px;
+  color: #d7ecd0;
+  text-shadow: 0 2px 8px rgba(0,0,0,.5);
+}
+.subtitle { margin-top: 4px; font-size: 13px; color: #8fa88a; letter-spacing: 3px; }
+
+main {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* ---------- 棋盘 ---------- */
+#board-wrap {
+  position: relative;
+  width: 660px;
+  max-width: 100%;
+  border: 8px solid #3d5245;
+  border-radius: 12px;
+  box-shadow: 0 10px 34px rgba(0,0,0,.55), inset 0 0 18px rgba(61,82,69,.5);
+  background: #3d5245;
+  line-height: 0;
+}
+#board { width: 100%; height: auto; display: block; border-radius: 4px; }
+
+/* 终局遮罩 */
+#overlay {
+  position: absolute; inset: 0;
+  background: rgba(10, 18, 12, .62);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 4px;
+  line-height: 1.5;
+}
+#overlay.hidden { display: none; }
+.overlay-card {
+  text-align: center;
+  background: rgba(243, 250, 240, .96);
+  color: #23422c;
+  padding: 28px 44px;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.6);
+}
+#overlay-text {
+  font-size: 28px; font-weight: bold; letter-spacing: 4px;
+  margin-bottom: 8px;
+}
+#overlay-sub { font-size: 15px; color: #5c7a63; margin-bottom: 16px; }
+#overlay-btn {
+  font-size: 16px; padding: 8px 26px;
+  background: #2e7d32; color: #fff;
+  border: none; border-radius: 6px; cursor: pointer;
+}
+#overlay-btn:hover { background: #27642b; }
+
+/* ---------- 右侧面板 ---------- */
+#panel { width: 320px; max-width: 100%; }
+.card {
+  background: rgba(255, 255, 245, .07);
+  border: 1px solid rgba(232, 240, 228, .16);
+  border-radius: 10px;
+  padding: 16px;
+  backdrop-filter: blur(2px);
+}
+
+.hud { display: flex; gap: 10px; margin-bottom: 10px; }
+.hud-item {
+  flex: 1;
+  background: rgba(0,0,0,.22);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex; align-items: baseline; justify-content: space-between;
+}
+.hud-label { font-size: 13px; color: #8fa88a; }
+.hud-value { font-size: 22px; font-weight: bold; color: #ffd54f; font-variant-numeric: tabular-nums; }
+
+.status {
+  text-align: center;
+  font-size: 17px;
+  color: #d7ecd0;
+  letter-spacing: 2px;
+  padding: 8px 6px;
+  border-bottom: 1px dashed rgba(232,240,228,.25);
+  margin-bottom: 12px;
+  min-height: 40px;
+}
+
+.controls { display: flex; flex-direction: column; gap: 9px; margin-bottom: 14px; font-size: 14px; }
+.controls > label:first-child {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+.controls select {
+  flex: 1;
+  background: #33463a; color: #e8f0e4;
+  border: 1px solid #4e6656; border-radius: 5px;
+  padding: 4px 8px; font-size: 14px; outline: none;
+}
+.chk {
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer; color: #c9dcc4;
+  user-select: none;
+}
+.chk input { width: 16px; height: 16px; accent-color: #2e7d32; cursor: pointer; }
+
+.btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+.btns button {
+  padding: 8px 0;
+  font-size: 15px;
+  font-family: inherit;
+  color: #e8f0e4;
+  background: linear-gradient(180deg, #3a6a45, #295033);
+  border: 1px solid #4e8259;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: filter .15s, transform .05s;
+}
+.btns button:hover { filter: brightness(1.15); }
+.btns button:active { transform: scale(.97); }
+
+.tips {
+  font-size: 12.5px;
+  color: #8fa88a;
+  line-height: 1.9;
+}
+.sp {
+  display: inline-block;
+  min-width: 20px;
+  text-align: center;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12px;
+  padding: 1px 3px;
+  margin: 0 2px;
+}
+.sp-bonus { background: #f9a825; }
+.sp-slow { background: #039be5; }
+.sp-shrink { background: #8e24aa; }
+
+@media (max-width: 1000px) {
+  main { flex-direction: column; align-items: center; }
+  #panel { width: 660px; max-width: 100%; }
+}
