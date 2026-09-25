@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>疯狂后厨 · 自动模拟</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>🍳 疯狂后厨</h1>
+      <p class="subtitle">全自动协作模拟：配菜师 🔪 · 主厨 🍳 · 跑堂 🏃 · 经理 👔 —— 坐等看店</p>
+    </header>
+
+    <main>
+      <div id="board-wrap">
+        <canvas id="board"></canvas>
+        <div id="guide-bar" class="hidden">
+          <div id="guide-text"></div>
+          <button id="guide-skip">跳过引导</button>
+        </div>
+        <div id="overlay" class="hidden">
+          <div class="overlay-card">
+            <div id="overlay-title">今日打烊</div>
+            <div id="overlay-body"></div>
+            <button id="overlay-btn">再开一天</button>
+          </div>
+        </div>
+        <div id="toast-box"></div>
+      </div>
+
+      <aside id="right-panel">
+        <div class="card">
+          <div class="hud">
+            <div class="hud-item big">
+              <span class="hud-label">💰 营业额</span>
+              <span class="hud-value" id="revenue">0</span>
+            </div>
+            <div class="hud-item">
+              <span class="hud-label">⏱ 时长</span>
+              <span class="hud-value" id="time">0:00</span>
+            </div>
+          </div>
+          <div class="hud">
+            <div class="hud-item">
+              <span class="hud-label">🍽 上菜</span>
+              <span class="hud-value" id="served">0</span>
+            </div>
+            <div class="hud-item">
+              <span class="hud-label">★ 完美</span>
+              <span class="hud-value" id="perfect">0</span>
+            </div>
+          </div>
+          <div class="hud">
+            <div class="hud-item">
+              <span class="hud-label">🙂 满意</span>
+              <span class="hud-value" id="cust-served">0</span>
+            </div>
+            <div class="hud-item">
+              <span class="hud-label">😠 流失</span>
+              <span class="hud-value" id="cust-lost">0</span>
+            </div>
+          </div>
+          <div class="hud">
+            <div class="hud-item">
+              <span class="hud-label">好评率</span>
+              <span class="hud-value" id="rating">—</span>
+            </div>
+            <div class="hud-item">
+              <span class="hud-label">平均等菜</span>
+              <span class="hud-value" id="avg-wait">—</span>
+            </div>
+          </div>
+
+          <div id="status" class="status">自动营业中</div>
+
+          <div class="speed-row">
+            <span class="speed-label">速度</span>
+            <button class="sp-btn active" id="btn-sp1">1×</button>
+            <button class="sp-btn" id="btn-sp2">2×</button>
+            <button class="sp-btn" id="btn-sp4">4×</button>
+          </div>
+
+          <div class="btns">
+            <button id="btn-new">重新营业</button>
+            <button id="btn-close">🌙 打烊结算</button>
+          </div>
+          <div class="btns">
+            <button id="btn-pause">暂停</button>
+            <button id="btn-sound">音效：开</button>
+          </div>
+
+          <!-- tabs -->
+          <div class="tabs">
+            <button class="tab-btn active" id="tab-stats">📊 营业</button>
+            <button class="tab-btn" id="tab-ach">🏅 成就</button>
+            <button class="tab-btn" id="tab-codex">📖 图鉴</button>
+            <button class="tab-btn" id="tab-board">🏆 榜单</button>
+            <button class="tab-btn" id="tab-skin">🎨 装扮</button>
+          </div>
+
+          <div id="pane-stats" class="pane">
+            <div class="log-mini" id="log"></div>
+          </div>
+          <div id="pane-ach" class="pane hidden">
+            <div id="ach-list" class="ach-list"></div>
+          </div>
+          <div id="pane-codex" class="pane hidden">
+            <div class="cx-title">🍳 菜品图鉴</div>
+            <div id="codex-recipes" class="codex-grid"></div>
+            <div class="cx-title">🧑 顾客图鉴</div>
+            <div id="codex-cust" class="codex-grid"></div>
+          </div>
+          <div id="pane-board" class="pane hidden">
+            <div class="cx-title">🏆 本店荣誉榜</div>
+            <div id="board-list"></div>
+          </div>
+          <div id="pane-skin" class="pane hidden">
+            <div class="cx-title">🎨 厨房装修主题</div>
+            <div id="theme-row" class="chip-row"></div>
+            <div class="cx-title">🎡 季节氛围</div>
+            <div id="season-row" class="chip-row"></div>
+            <div class="cx-title">✏️ 店长昵称</div>
+            <input type="text" id="name-input" maxlength="12" placeholder="输入昵称…">
+            <div class="tips-mini">
+              装修与昵称会自动保存；季节每 3 分钟自动轮换，也可手动切换（四季全经历可解锁成就）。<br>
+              <button id="btn-guide" class="link-btn">📖 重看新手引导</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/achievements.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
